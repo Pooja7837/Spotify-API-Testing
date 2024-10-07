@@ -11,10 +11,10 @@ The goal of this project is to perform API testing for Spotify using Postman and
 - **GET Artist Information**: Retrieve details of specific artists by their ID.
 - **GET Top Tracks**: Fetch top tracks for an artist in a specific market.
 - **POST ADD Playlist**: Create a new playlist in the current user's Spotify account.
--**GET Playlist**: Retrieve details of a specific playlist, including its items.
--**POST ADD ITEM TO pLAYLIST**:Add a track or episode to the specified playlist.
+- **GET Playlist**: Retrieve details of a specific playlist, including its items.
+- **POST ADD ITEM TO pLAYLIST**:Add a track or episode to the specified playlist.
 - **DELETE Remove item from Playlist**: Remove a track or episode from a playlist.
--**PUT Update the cover photo**: Update the image for an existing playlist.
+- **PUT Update the cover photo**: Update the image for an existing playlist.
 
 ## Tools & Technologies
 
