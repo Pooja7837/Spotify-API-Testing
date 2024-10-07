@@ -37,4 +37,24 @@ The goal of this project is to perform API testing for Spotify using Postman and
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YOUR_USERNAME/spotify-api-testing.git
+   git clone https://github.com/pooja7837/spotify-api-testing.git
+
+## Navigate to the project folder:
+cd spotify-api-testing
+
+## Run the Postman collection using Newman:
+newman run Spotify API Tests_collection.json -e Spotify API_Environment.json
+
+## Authentication
+This project uses Spotify's OAuth 2.0 for authentication. To get an access token:
+
+Go to the Spotify Developer Dashboard and create an application to get your Client ID and Client Secret.
+Use Postman or curl to get an access token using the Client Credentials flow.
+
+## Project Structure
+Spotify_API_Tests.json: Postman collection containing the API requests.
+Spotify_API_Environment.json: Environment variables for the Spotify API, such as tokens and IDs.
+
+## License
+This project is licensed under the MIT License 
+
