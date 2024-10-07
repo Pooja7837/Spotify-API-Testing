@@ -1,0 +1,507 @@
+{
+	"info": {
+		"_postman_id": "4b4d2af3-a2ce-4dbc-a79b-6fd8a47dc4a5",
+		"name": "Spotify API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38659929"
+	},
+	"item": [
+		{
+			"name": "GET Artist info",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"External URLs contain a valid Spotify URL\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData.external_urls.spotify).to.exist;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"strictSSL": false,
+				"followOriginalHttpMethod": false,
+				"followAuthorizationHeader": false,
+				"disableUrlEncoding": false
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/artists/0TnOYISbd1XYRBk9myaseg",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"artists",
+						"0TnOYISbd1XYRBk9myaseg"
+					]
+				},
+				"description": "Fetches detailed information about a specific artist whose ID is StartFragment0TnOYISbd1XYRBk9myasegEndFragment"
+			},
+			"response": []
+		},
+		{
+			"name": "GET TOP Track",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 200\", function () {\r",
+							"  pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response has the required fields\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData).to.have.property('tracks').that.is.an('array').that.is.not.empty;\r",
+							"\r",
+							"    responseData.tracks.forEach(function(track) {\r",
+							"        pm.expect(track).to.have.property('album').that.is.an('object');\r",
+							"        pm.expect(track).to.have.property('artists').that.is.an('array').that.is.not.empty;\r",
+							"        pm.expect(track).to.have.property('disc_number');\r",
+							"        pm.expect(track).to.have.property('duration_ms');\r",
+							"        pm.expect(track).to.have.property('explicit');\r",
+							"        pm.expect(track).to.have.property('external_ids').that.is.an('object');\r",
+							"        pm.expect(track).to.have.property('external_urls').that.is.an('object');\r",
+							"        pm.expect(track).to.have.property('href');\r",
+							"        pm.expect(track).to.have.property('id');\r",
+							"        pm.expect(track).to.have.property('is_local');\r",
+							"        pm.expect(track).to.have.property('is_playable');\r",
+							"        pm.expect(track).to.have.property('name');\r",
+							"        pm.expect(track).to.have.property('popularity');\r",
+							"        pm.expect(track).to.have.property('preview_url');\r",
+							"        pm.expect(track).to.have.property('track_number');\r",
+							"        pm.expect(track).to.have.property('type');\r",
+							"        pm.expect(track).to.have.property('uri');\r",
+							"    });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Album type is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData).to.be.an('object');\r",
+							"  pm.expect(responseData.tracks).to.be.an('array');\r",
+							"  responseData.tracks.forEach(function(track) {\r",
+							"    pm.expect(track.album).to.be.an('object');\r",
+							"    pm.expect(track.album.album_type).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Album type should not be empty\");\r",
+							"  });\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Artists array is present and contains expected number of elements\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"\r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.tracks).to.be.an('array');\r",
+							"    pm.expect(responseData.tracks[0].artists).to.be.an('array').that.is.not.empty;\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/artists/6eUKZXaKkcviH0Ku9w2n3V/top-tracks?market=US",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"artists",
+						"6eUKZXaKkcviH0Ku9w2n3V",
+						"top-tracks"
+					],
+					"query": [
+						{
+							"key": "market",
+							"value": "US"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete audiobook",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ids\": [\r\n        \"18yVqkdbdRvS24c0Ilj2ci\",\r\n        \"1HGw3J3NxZO1TP1BTtVhpZ\",\r\n        \"7iHfbu1YPACw6oZPAFJtqe\"\r\n    ]\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/me/audiobooks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"me",
+						"audiobooks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD Playlist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var template = `\r",
+							"<style type=\"text/css\">\r",
+							"    .tftable {font-size:14px;color:#333333;width:100%;border-width: 1px;border-color: #87ceeb;border-collapse: collapse;}\r",
+							"    .tftable th {font-size:18px;background-color:#87ceeb;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;text-align:left;}\r",
+							"    .tftable tr {background-color:#ffffff;}\r",
+							"    .tftable td {font-size:14px;border-width: 1px;padding: 8px;border-style: solid;border-color: #87ceeb;}\r",
+							"    .tftable tr:hover {background-color:#e0ffff;}\r",
+							"</style>\r",
+							"\r",
+							"<table class=\"tftable\" border=\"1\">\r",
+							"    <tr>\r",
+							"        <th>Status</th>\r",
+							"        <th>Error Message</th>\r",
+							"    </tr>\r",
+							"    <tr>\r",
+							"        <td>{{response.error.status}}</td>\r",
+							"        <td>{{response.error.message}}</td>\r",
+							"    </tr>\r",
+							"</table>\r",
+							"`;\r",
+							"\r",
+							"function constructVisualizerPayload() {\r",
+							"    return {response: pm.response.json()}\r",
+							"}\r",
+							"\r",
+							"pm.visualizer.set(template, constructVisualizerPayload());"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\":\"demo playlist\",\r\n   \"desription\":\"demo\",\r\n   \"public\":\"false\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/users/:user_id/playlists",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"users",
+						":user_id",
+						"playlists"
+					],
+					"variable": [
+						{
+							"key": "user_id",
+							"value": "{{user_id }}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Playlist",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{{playlist_ID}}",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{{playlist_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ADD item to Playlist",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/:playlistId/tracks?uris=spotify:track:0OA00aPt3BV10qeMIs3meW,spotify:track:4xt9T7bqLoLHuHpdVAJdVd,spotify:track:4WLDaQ8AgSwUgFoPzJkAYK",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						":playlistId",
+						"tracks"
+					],
+					"query": [
+						{
+							"key": "uris",
+							"value": "spotify:track:0OA00aPt3BV10qeMIs3meW,spotify:track:4xt9T7bqLoLHuHpdVAJdVd,spotify:track:4WLDaQ8AgSwUgFoPzJkAYK"
+						}
+					],
+					"variable": [
+						{
+							"key": "playlistId",
+							"value": "5t4drEe7sxPN8WsUWaJRfj"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove Item from playlist",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"tracks\": [\r\n        {\r\n            \"uri\": \"spotify:track:4WLDaQ8AgSwUgFoPzJkAYK\"\r\n        }\r\n    ],\r\n    \"snapshot_id\": \"AAAAAyLqupqm8vrgYa7McY3VMcs94El5\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{{playlist_ID}}/tracks",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{{playlist_ID}}",
+						"tracks"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update cover image",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Response status code is 400\", function () {\r",
+							"    pm.expect(pm.response.code).to.equal(400);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response time is less than 200ms\", function () {\r",
+							"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Response has the required fields - error, status, and message\", function () {\r",
+							"    const responseData = pm.response.json();\r",
+							"    \r",
+							"    pm.expect(responseData).to.be.an('object');\r",
+							"    pm.expect(responseData.error).to.exist;\r",
+							"    pm.expect(responseData.error.status).to.exist;\r",
+							"    pm.expect(responseData.error.message).to.exist;\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Status is a non-negative integer\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.error.status).to.be.a('number').and.to.be.at.least(0);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"pm.test(\"Message is a non-empty string\", function () {\r",
+							"  const responseData = pm.response.json();\r",
+							"  \r",
+							"  pm.expect(responseData.error.message).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Message should not be empty\");\r",
+							"});\r",
+							"pm.test(\"Response content type is application/json\", function () {\r",
+							"    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "image/jpg",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "/9j/2wCEABoZGSccJz4lJT5CLy8vQkc9Ozs9R0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0cBHCcnMyYzPSYmPUc9Mj1HR0dEREdHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR0dHR//dAAQAAf/uAA5BZG9iZQBkwAAAAAH/wAARCAABAAEDACIAAREBAhEB/8QASwABAQAAAAAAAAAAAAAAAAAAAAYBAQAAAAAAAAAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAAAAAARAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwAAARECEQA/AJgAH//Z"
+				},
+				"url": {
+					"raw": "https://api.spotify.com/v1/playlists/{{playlist_ID}}/images",
+					"protocol": "https",
+					"host": [
+						"api",
+						"spotify",
+						"com"
+					],
+					"path": [
+						"v1",
+						"playlists",
+						"{{playlist_ID}}",
+						"images"
+					]
+				},
+				"description": "### Update Playlist Image\n\nThis endpoint allows the user to update the cover image of a specific playlist on Spotify.\n\n#### Request Body\n\nThe request body for this endpoint is of type file, and it should contain the new image to be set as the cover for the playlist.\n\n#### Response\n\nThe response for this request is a JSON object with the following schema:\n\n``` json\n{\n  \"error\": {\n    \"status\": \"number\",\n    \"message\": \"string\"\n  }\n}\n\n ```\n\nThe `error` object contains the status code and an optional message providing details about the error encountered during the request."
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "scope",
+				"value": "user-library-modify playlist-read-private playlist-modify-private playlist-modify-public ugc-image-upload",
+				"type": "string"
+			},
+			{
+				"key": "useBrowser",
+				"value": false,
+				"type": "boolean"
+			},
+			{
+				"key": "redirect_uri",
+				"value": "https://oauth.pstmn.io/v1/browser-callback",
+				"type": "string"
+			},
+			{
+				"key": "authUrl",
+				"value": "https://accounts.spotify.com/authorize",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "https://accounts.spotify.com/api/token",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "{{paswrdsecretclient}}",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "{{username_clientid}}",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "client id",
+			"value": "{{client id}}"
+		},
+		{
+			"key": "username_clientid",
+			"value": "2868850f26fa435c90346fd0022517af"
+		},
+		{
+			"key": "paswrdsecretclient",
+			"value": "16ecb86b381f42e88a2cc7dcb99ba4ff"
+		},
+		{
+			"key": "playlist_ID",
+			"value": "4DwqLI3wasbQblE5XjhX2U",
+			"type": "string"
+		}
+	]
+}

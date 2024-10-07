@@ -1,0 +1,27 @@
+{
+	"id": "2972ff2a-c057-433f-946c-522068b77343",
+	"name": "Spotify API",
+	"values": [
+		{
+			"key": "client_id",
+			"value": "2868850f26fa435c90346fd0022517af",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "client_secret",
+			"value": "16ecb86b381f42e88a2cc7dcb99ba4ff",
+			"type": "default",
+			"enabled": true
+		},
+		{
+			"key": "user_id ",
+			"value": "317gn2ok7kszwiiw3hlkiae5apau",
+			"type": "default",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2024-10-07T09:37:18.659Z",
+	"_postman_exported_using": "Postman/11.14.1"
+}
